@@ -6,8 +6,8 @@ export interface ContainerProps extends DefaultComponent {
 
 const Container = ({ children, className }: ContainerProps) => {
   return (
-    <section className={styles.component(className)}>
-      <article className={styles.container}>
+    <section className={styles.component}>
+      <article className={styles.container(className)}>
         {children}
       </article>
     </section>

@@ -1,0 +1,94 @@
+---
+title: Load scripts async
+date: 'February 19, 2022'
+tags: ['javascript', 'js']
+---
+
+<Code>
+  {`const LOADING_STATE = 'loading';
+const LOADED_STATE = 'loaded';
+const LOADING_INTERVAL_TIME = 200;
+const MAX_LOADING_RETRY = 10;
+
+/**
+* Append node to header element
+*
+* @param element
+*/
+const appendToHeader = (element) => {
+  const headers = document.getElementsByTagName('header');
+  const header = headers && headers.length && headers[0];
+  if (header) {
+    header.appendChild(element);
+  }
+};
+
+/**
+* Verify is a library was loaded before
+*
+* @param id Library id
+* @returns {*|null}
+*/
+const verifyLibraryLoaded = (id) => {
+  const { dataset = {} } = document.documentElement;
+  const state = dataset[id];
+
+  return state || null;
+};
+
+/**
+* Load script in async way
+*
+* @param source
+* @param id
+* @returns {Promise<boolean>}
+*/
+const loadScript = (source, id) => {
+  const state = verifyLibraryLoaded(id);
+
+  if (state) {
+    if (state === LOADING_STATE) {
+      /* Waiting 10 times the library loads */
+      return new Promise((resolve, reject) => {
+        let counter = 0;
+        let intervalId;
+        const verify = () => {
+          const currentState = verifyLibraryLoaded(id);
+
+          if (currentState === LOADED_STATE) {
+            clearInterval(intervalId);
+            return resolve(true);
+          }
+          if (counter === MAX_LOADING_RETRY) {
+            reject(false);
+          }
+          counter++;
+        };
+        intervalId = setInterval(verify, LOADING_INTERVAL_TIME);
+      });
+    } else if (state === LOADED_STATE) {
+      /* return and execute */
+      return Promise.resolve(true);
+    }
+  }
+
+  const script = document.createElement('script');
+  script.src = source;
+
+  if (id) {
+    document.documentElement.dataset[id] = LOADING_STATE;
+  }
+
+  return new Promise((resolve, reject) => {
+    script.addEventListener('error', () => reject(false));
+    script.addEventListener('load', () => {
+      if (id) {
+        document.documentElement.dataset[id] = LOADED_STATE;
+      }
+      resolve(true);
+    });
+    appendToHeader(script);
+  });
+};
+`}
+</Code>

@@ -20,16 +20,16 @@ How to detect the current user browser.
   const isBlink = (isChrome || isOpera) && !!window.CSS;
   var isIOSChrome = navigator.userAgent.match("CriOS");
 
-    window.browser = {
-      isOpera,
-      isFirefox,
-      isSafari,
-      isIE,
-      isEdge,
-      isChrome,
-      isIOSChrome,
-      isBlink,
-    };
+  window.browser = {
+    isOpera,
+    isFirefox,
+    isSafari,
+    isIE,
+    isEdge,
+    isChrome,
+    isIOSChrome,
+    isBlink,
+  };
 })(window, navigator || {});`}
 </Code>
 

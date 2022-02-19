@@ -1,0 +1,62 @@
+---
+title: Load styles async
+date: 'February 19, 2022'
+tags: ['javascript', 'js']
+---
+
+<Code>
+  {`const LOADED_STATE = 'loaded';
+
+/**
+* Append node to header element
+*
+* @param element
+*/
+const appendToHeader = (element) => {
+  const headers = document.getElementsByTagName('header');
+  const header = headers && headers.length && headers[0];
+  if (header) {
+    header.appendChild(element);
+  }
+};
+
+/**
+* Verify is a library was loaded before
+*
+* @param id Library id
+* @returns {*|null}
+*/
+const verifyLibraryLoaded = (id) => {
+  const { dataset = {} } = document.documentElement;
+  const state = dataset[id];
+
+    return state || null;
+  };
+
+/**
+* Load stylesheet in async way
+*
+* @param source stylesheet url
+* @param id resource id
+* @returns {Promise<boolean>}
+*/
+const loadStyles = (source, id) => {
+  const state = verifyLibraryLoaded(id);
+
+  if (state && state === LOADED_STATE) {
+    return Promise.resolve(true);
+  }
+
+  return new Promise((resolve) => {
+    const resource = document.createElement('link');
+    resource.rel = 'stylesheet';
+    resource.href = source;
+
+    resource.addEventListener('load', () => {
+      resolve(true);
+    });
+    appendToHeader(resource);
+  });
+};
+`}
+</Code>
