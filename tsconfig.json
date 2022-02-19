@@ -1,7 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
+    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "paths": {
+      "@atoms/*": ["components/atoms/*"],
+      "@icons/*": ["images/icons/*"],
+      "@molecules/*": ["components/molecules/*"],
+      "@organisms/*": ["components/organisms/*"],
+      "@pages/*": ["pages/*"],
+      "@templates/*": ["components/templates/*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

@@ -1,0 +1,38 @@
+---
+title: Browser detector
+date: 'February 19, 2022'
+description: How to detect the current user browser.
+tags: ['javascript', 'js', 'browser']
+---
+
+How to detect the current user browser.
+
+<Code>
+  {`((window, navigator) => {
+  const isOpera = typeof window.opr !== 'undefined';
+  const isFirefox = typeof InstallTrigger !== 'undefined';
+  const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
+  const isIE = /*@cc_on!@*/false || !!document.documentMode;
+  const isChromium = window.chrome;
+  const isEdge = navigator.userAgent.indexOf('Edg') > -1;
+  const vendorName = navigator.vendor;
+  const isChrome = isChromium !== null && typeof isChromium !== 'undefined' && vendorName === 'Google Inc.' && isOpera === false && isEdge === false;
+  const isBlink = (isChrome || isOpera) && !!window.CSS;
+  var isIOSChrome = navigator.userAgent.match("CriOS");
+
+    window.browser = {
+      isOpera,
+      isFirefox,
+      isSafari,
+      isIE,
+      isEdge,
+      isChrome,
+      isIOSChrome,
+      isBlink,
+    };
+})(window, navigator || {});`}
+</Code>
+
+This snippet was extracted from StackOverflow answers:
+- [how-to-detect-safari-chrome-ie-firefox-and-opera-browser](https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser#9851769)
+- [javascript-how-to-find-out-if-the-user-browser-is-chrome](https://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome/13348618#13348618)
