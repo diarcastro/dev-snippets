@@ -15,11 +15,11 @@ const Snippet = ({
   const componentClasses = classNames(className);
 
   return (
-  <React.Fragment>
-    <Header />
-    <main className={componentClasses}>{children}</main>
-  </React.Fragment>
-)
+    <React.Fragment>
+      <Header />
+      <main className={componentClasses}>{children}</main>
+    </React.Fragment>
+  )
 };
 
 export default Snippet;
