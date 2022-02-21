@@ -1,0 +1,51 @@
+---
+title: CRACO config to prevent dynamic js/css
+date: 'February 21, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['javascript', 'js']
+---
+Override CRA configuration in order to know the output asset name.
+
+<Code>
+  {`module.exports = {
+  webpack: {
+    configure: {
+      output: {
+        // publicPath: process.env.REACT_APP_BASE_URL || '/',
+        filename: 'js/my-js.js',
+      },
+      optimization: {
+        runtimeChunk: false,
+        splitChunks: {
+          chunks() {
+            return false
+          },
+        },
+      },
+    },
+    alias: {
+      "@atoms": "components/atoms/",
+      "@icons": "images/icons/",
+      "@molecules": "components/molecules/",
+      "@organisms": "components/organisms/",
+      "@pages": "pages/",
+      "@templates": "components/templates/",
+    },
+  },
+  plugins: [
+    {
+      plugin: {
+        overrideWebpackConfig: ({ webpackConfig }) => {
+          webpackConfig.plugins[5].options.filename = 'css/my-css.css';
+          return webpackConfig;
+        },
+      },
+      options: {}
+    }
+  ],
+}`}
+</Code>
+
+More info
+* [CRACO](https://github.com/gsoft-inc/craco)
