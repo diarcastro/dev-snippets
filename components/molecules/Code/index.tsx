@@ -8,7 +8,7 @@ export interface CodeProps extends WithChildren {
 }
 const Code = ({ language = 'javascript', children}: CodeProps) => {
   return (
-    <article className="my-6">
+    <article className="my-6 rounded-md overflow-hidden">
       <SyntaxHighlighter language={language} style={nightOwl}>
         {children}
       </SyntaxHighlighter>

@@ -15,7 +15,7 @@ const Sidebar = ({tags, onChange}: SidebarProps) => {
     }
   };
   return (
-    <React.Fragment>
+    <aside className="sticky top-8">
       <h2 className="text-xl font-bold my-4">Tags</h2>
       {
         tags.length > 0 && tags.map(({ name, active }: TagItem) => (
@@ -27,7 +27,7 @@ const Sidebar = ({tags, onChange}: SidebarProps) => {
       <button type="button" className="block mb-4" onClick={() => onClick(null)}>
         Reset
       </button>
-    </React.Fragment>
+    </aside>
   );
 };
 
