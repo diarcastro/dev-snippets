@@ -1,0 +1,26 @@
+---
+title: Component with Children and Classname interfaces
+date: 'February 20, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['ts', 'typescript', 'react']
+---
+
+<Code>
+  {`import { ReactNode } from 'react';
+
+export type ClassNameType = string | undefined;
+export type Children = ReactNode | JSX.Element | JSX.Element[] | string | number | null;
+
+export interface WithChildren {
+  children?: Children;
+}
+
+export interface WithClassName {
+  className?: ClassNameType;
+}
+
+export interface DefaultComponent extends WithChildren, WithClassName {
+}
+`}
+</Code>

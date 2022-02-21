@@ -1,0 +1,35 @@
+---
+title: Dev Mode in Drupal
+date: 'February 20, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['Drupal']
+---
+You should create or modify the following files:
+
+
+`<your-site-docroot>sites/local.services.yml`
+
+<Code language="yml">
+  {`parameters:
+  http.response.debug_cacheability_headers: true
+  twig.config:
+    debug: true
+    auto_reload: true
+    cache: false
+services:
+  cache.backend.null:
+    class: Drupal\Core\Cache\NullBackendFactory`}
+</Code>
+
+`<your-site-docroot>sites/default/settings/local.settings.php`
+
+<Code language="yml">
+  {`$settings['kint_maxLevels'] = '4';
+$settings['cache']['bins']['render'] = 'cache.backend.null';
+$settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+$settings['cache']['bins']['page'] = 'cache.backend.null';`}
+</Code>
+
+More documentation in:
+- [Using Attributes in Templates](https://www.drupal.org/docs/8/theming-drupal-8/using-attributes-in-templates)
