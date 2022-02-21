@@ -1,0 +1,30 @@
+---
+title: Manipulate attributes in twig template
+date: 'February 19, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['Drupal', 'twig']
+---
+<Code language="twig">
+  {`{% set my_attribute = create_attribute() %}
+{%
+  set my_classes = [
+    'kittens',
+    'llamas',
+    'puppies',
+  ]
+%}
+<div{{ my_attribute.addClass(my_classes).setAttribute('id', 'myUniqueId') }}>
+  {{ content }}
+</div>
+
+# Other useful methods
+# Add single class: attributes.addClass('<className>')
+# Remove Class: attributes.removeClass()
+# Remove Attribute: attributes.removeAttribute('<attributeName>')
+# Verify if an element has a class: attributes.hasClass('<className>')
+# Access to attribute key: attributes.<key>. e.g. attribute.style, attribute['attribute-name']`}
+</Code>
+
+More documentation in:
+- [Using Attributes in Templates](https://www.drupal.org/docs/8/theming-drupal-8/using-attributes-in-templates)

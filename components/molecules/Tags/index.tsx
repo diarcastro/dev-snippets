@@ -1,7 +1,8 @@
 import Pill from '@atoms/Pill';
+import { TagsLike } from 'interfaces/snippets';
 
 export interface TagsProps {
-  tags: Array<string>;
+  tags: TagsLike;
 }
 
 const Tags = ({tags}: TagsProps) => (

@@ -1,7 +1,12 @@
 import { WithChildren } from 'interfaces/elements';
+import styles from './styles';
 
-const Pill = ({ children }: WithChildren ) => (
-  <span className="px-3 py-1.5 mr-2 bg-blue-500 text-white rounded text-sm">{children}</span>
+export interface PillProps extends WithChildren {
+  active?: boolean;
+}
+
+const Pill = ({ active = false, children }: PillProps) => (
+  <span className={styles.component(active)}>{children}</span>
 );
 
 export default Pill;

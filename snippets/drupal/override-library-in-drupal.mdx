@@ -1,0 +1,32 @@
+---
+title: Library Override in Drupal
+date: 'February 20, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['Drupal']
+---
+`<your-site-docroot>themes/custom/<your-theme>/<your-theme>.yml`
+
+<Code language="yml">
+  {`libraries-override:
+  # Replace an entire library.
+  core/drupal.collapse: mytheme/collapse
+
+  # Replace an asset with another.
+  subtheme/library:
+    css:
+      theme:
+        css/layout.css: css/my-layout.css
+
+  # Remove an asset.
+  drupal/dialog:
+    css:
+      theme:
+        dialog.theme.css: false
+
+  # Remove an entire library.
+  core/modernizr: false`}
+</Code>
+
+More documentation in:
+- [Libraries can now be overridden and extended by themes](https://www.drupal.org/node/2497313)
