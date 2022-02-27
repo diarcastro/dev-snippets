@@ -19,6 +19,15 @@ const getSnippets = async () => {
         } else {
           const markdownWithMeta = fs.readFileSync(filePath, 'utf-8')
           const { data: metadata, content } = matter(markdownWithMeta);
+          const { date } = metadata;
+
+          if (!date) {
+            metadata.date = new Date().toString();
+            metadata.ts = new Date().getTime();
+          } else {
+            metadata.ts = new Date(date).getTime();
+          }
+
           const mdxSource = await serialize(content);
 
           snippets.push({
@@ -32,7 +41,13 @@ const getSnippets = async () => {
   };
   await readDir(path.join('snippets'));
 
-  return snippets;
+  return snippets && snippets.sort((a, b) => {
+    if (a.metadata.ts && b.metadata.ts) {
+      return b.metadata.ts - a.metadata.ts;
+    }
+
+    return 0;
+  });
 };
 
 export default getSnippets;

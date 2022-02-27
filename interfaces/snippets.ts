@@ -5,6 +5,7 @@ export type TagsLike = Array<string>;
 export interface SnippetMetadata {
   title: string;
   date: string;
+  ts?: number;
   description: string;
   tags: TagsLike;
   keywords?: TagsLike;
