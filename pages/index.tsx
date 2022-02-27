@@ -136,11 +136,12 @@ const Home: NextPage<HomeProps> = ({ snippets }) => {
             {
               filteredSnippets.length > 0 && filteredSnippets.map((snippet: SnippetData) => {
                 const { metadata, slug, mdxSource } = snippet;
-                const { title, tags } = metadata;
+                const { title, tags, date } = metadata;
 
                 return (
                   <article key={slug} className="pb-8">
                     <h2 className="text-2xl font-bold my-4">{title}</h2>
+                    <small>{date}</small>
                     <Tags tags={tags} />
                     <MDXRemote {...mdxSource} components={{ Code }} />
                   </article>
