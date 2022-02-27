@@ -1,0 +1,41 @@
+---
+title: Get the parent node by using VanillaJS
+date: 'February 27, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['javascript', 'js']
+keywords: []
+---
+
+Some utilities to select elements by using some short-hand and safe functions.
+
+<Code>
+  {`/**
+ * Get the node's parent element.
+ * @param element HTMLElement
+ * @param classOrId
+ * @returns {null|HTMLElement}
+ */
+const getParentNode = (element, classOrId) => {
+  try {
+    let parent = element.parentNode;
+    if (!classOrId) {
+      return parent;
+    }
+
+    while (parent) {
+      if (parent.classList.contains(classOrId) || parent.id === classOrId) {
+        return parent;
+      }
+      parent = parent.parentNode;
+    }
+  } catch (e) {
+    return null;
+  }
+  return null;
+};`}
+</Code>
+
+This snippet was extracted from StackOverflow answers:
+- [how-to-detect-safari-chrome-ie-firefox-and-opera-browser](https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser#9851769)
+- [javascript-how-to-find-out-if-the-user-browser-is-chrome](https://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome/13348618#13348618)

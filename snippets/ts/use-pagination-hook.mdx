@@ -1,0 +1,157 @@
+---
+title: usePagination hook
+date: 'February 27, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['ts', 'typescript', 'react', 'hooks']
+keywords: ['hooks','reducer']
+---
+
+With this React hook you can manipulate items pagination.
+
+<Code code="typescript">
+  {`import { Reducer, useEffect, useReducer } from 'react';
+
+export const DEFAULT_ITEMS_PER_PAGE = 8;
+
+export interface PaginationState<ItemsType = any> {
+  totalPages: number;
+  currentPage: number;
+  items: ItemsType[];
+  itemsPerPage: number;
+}
+
+export enum PaginationStateActionType {
+  NEXT_PAGE = 'NEXT_PAGE',
+  PREV_PAGE = 'PREV_PAGE',
+  GOTO_PAGE = 'GOTO_PAGE',
+  SET_ITEMS = 'SET_ITEMS',
+}
+
+export interface PaginationStateActionPayload<ItemsType = any> {
+  pageNumber?: number;
+  newItems?: ItemsType[];
+}
+
+export interface PaginationStateAction<ItemsType = any> {
+  type: PaginationStateActionType;
+  payload?: PaginationStateActionPayload<ItemsType>;
+}
+
+const reducer = (state: PaginationState, action: PaginationStateAction) => {
+  const {
+    currentPage,
+    itemsPerPage,
+    totalPages,
+  } = state;
+  const {
+    type,
+    payload: {
+      pageNumber,
+      newItems = [],
+    } = {},
+  } = action;
+
+  const nextPage = type === PaginationStateActionType.NEXT_PAGE
+    ? currentPage + 1
+    : currentPage - 1;
+
+  switch (type) {
+    case PaginationStateActionType.NEXT_PAGE: {
+      if (nextPage <= totalPages) {
+        return { ...state, currentPage: nextPage };
+      }
+      return state;
+    }
+    case PaginationStateActionType.PREV_PAGE: {
+      if (nextPage > 0) {
+        return { ...state, currentPage: nextPage };
+      }
+      return state;
+    }
+    case PaginationStateActionType.GOTO_PAGE: {
+      if (pageNumber && pageNumber > 0 && pageNumber <= totalPages) {
+        return { ...state, currentPage: pageNumber };
+      }
+      return state;
+    }
+    case PaginationStateActionType.SET_ITEMS:
+      return {
+        ...state,
+        items: newItems,
+        totalPages: newItems && Math.ceil(newItems.length / itemsPerPage),
+        currentPage: 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const initialPaginationState: PaginationState = {
+  currentPage: 1,
+  items: [],
+  totalPages: 0,
+  itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
+};
+
+const usePagination = <ItemsType>(
+  elements: ItemsType[],
+  itemsPerPage: number = DEFAULT_ITEMS_PER_PAGE,
+) => {
+  const totalPages = elements && Math.ceil(elements.length / itemsPerPage);
+
+  const [state, dispatch] = useReducer<Reducer<
+  PaginationState<ItemsType>,
+  PaginationStateAction<ItemsType>
+  >>(
+    reducer,
+    {
+      ...initialPaginationState,
+      totalPages,
+      items: elements,
+      itemsPerPage,
+    },
+  );
+  const {
+    currentPage,
+    items,
+  } = state;
+
+  const currentPageIndex = currentPage - 1;
+  const pageElements = items.slice(currentPageIndex * itemsPerPage, currentPage * itemsPerPage);
+
+  const nextPage = () => dispatch({ type: PaginationStateActionType.NEXT_PAGE });
+  const prevPage = () => dispatch({ type: PaginationStateActionType.PREV_PAGE });
+  const gotToPage = (pageNumber: number) => dispatch({
+    type: PaginationStateActionType.GOTO_PAGE,
+    payload: {
+      pageNumber,
+    },
+  });
+
+  useEffect(() => {
+    dispatch({
+      type: PaginationStateActionType.SET_ITEMS,
+      payload: {
+        newItems: elements,
+      },
+    });
+  }, [elements]);
+
+  return {
+    currentPage,
+    currentPageIndex,
+    pageElements,
+    totalPages,
+    isFirstPage: currentPage === 1,
+    isLastPage: currentPage === totalPages,
+
+    gotToPage,
+    nextPage,
+    prevPage,
+  };
+};
+
+export default usePagination;
+`}
+</Code>

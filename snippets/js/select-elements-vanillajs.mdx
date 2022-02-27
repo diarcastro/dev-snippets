@@ -1,0 +1,55 @@
+---
+title: Select elements by using VanillaJS
+date: 'February 27, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['javascript', 'js']
+keywords: ['querySelector']
+---
+
+Some utilities to select elements by using some short-hand and safe functions.
+
+<Code>
+  {`/**
+* Get Element by using vanillaJS
+* @param selector selector like string. e.g: ".my-element", "#my-element"
+* @param parent Get the element inside another element
+* @returns {null|HTMLElement}
+*/
+const qs = (selector, parent) => {
+  try {
+    return parent
+      ? parent.querySelector(selector)
+      : document.querySelector(selector);
+  } catch (e) {
+    return null;
+  }
+};
+
+/**
+ * Get Elements by using vanillaJS
+ * @param selector selector like string. e.g: ".my-element", "#my-element"
+ * @param parent Get the element inside another element
+ * @returns {null|*|NodeListOf<*>}
+ */
+const qsa = (selector, parent) => {
+  try {
+    return parent
+      ? parent.querySelectorAll(selector)
+      : document.querySelectorAll(selector);
+  } catch (e) {
+    return null;
+  }
+};
+
+/**
+ * getElementById short-hand function
+ * @param id
+ * @returns {HTMLElement}
+ */
+const byId = (id) => document.getElementById(id);`}
+</Code>
+
+This snippet was extracted from StackOverflow answers:
+- [how-to-detect-safari-chrome-ie-firefox-and-opera-browser](https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser#9851769)
+- [javascript-how-to-find-out-if-the-user-browser-is-chrome](https://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome/13348618#13348618)
