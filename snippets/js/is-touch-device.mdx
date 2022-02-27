@@ -1,0 +1,24 @@
+---
+title: Is a touch device?
+date: 'February 27, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['javascript', 'js']
+keywords: []
+---
+
+Verify if the current user's device is a touchscreen
+
+<Code>
+  {`/**
+* Verify if the current browser is a touch device
+* @returns {boolean}
+*/
+const isTouchDevice = () => (('ontouchstart' in window)
+    || (navigator.maxTouchPoints > 0)
+    || (navigator.msMaxTouchPoints > 0));`}
+</Code>
+
+This snippet was extracted from StackOverflow answers:
+- [how-to-detect-safari-chrome-ie-firefox-and-opera-browser](https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser#9851769)
+- [javascript-how-to-find-out-if-the-user-browser-is-chrome](https://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome/13348618#13348618)

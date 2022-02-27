@@ -1,0 +1,63 @@
+---
+title: Convert links entities into object
+date: 'February 27, 2022'
+author: Diego Castro
+authorNickname: diarcastro
+tags: ['Drupal', 'php','hooks', 'preprocess']
+---
+Create a pre-process to intercept a paragraph and transform a list of LinkItem into an object to use it in the twig template.
+
+> The following code uses `<my-theme-name>`, replace with your theme name.
+
+<Code language="php">
+  {`function <my-theme-name>_preprocess_paragraph(&$variables) {
+  $paragraph = $variables['elements']['#paragraph'];
+  $paragraph_type = $paragraph->getParagraphType();
+  switch ($paragraph_type->id) {
+    case 'links_list':
+      $menu = $paragraph->field_menu;
+      $menu_items = [];
+      if (count($menu)) {
+        foreach ($menu as $menu_item) {
+          /* @var $menu_item Drupal\link\Plugin\Field\FieldType\LinkItem */
+          $values = $menu_item->getValue();
+          $link_title = isset($values['title']) ? $values['title'] : '';
+
+            $item = [
+              'url' => $menu_item->getUrl()->toString(),
+              'text' => $link_title,
+              'isExternal' => $menu_item->getUrl()->isExternal(),
+            ];
+            $menu_items[] = $item;
+          }
+        }
+
+        $variables['menu_items'] = $menu_items;
+        break;
+      }
+   }
+}`}
+</Code>
+
+And in your twig template you can do something like:
+
+<Code language="twig">
+  {`{% if menu_items %}
+  {% set menu_markup %}
+    <ul class="menu list-unstyled">
+      {% set link_attributes = create_attribute().setAttribute('rel', 'nofollow noopener') %}
+      {% for link in menu_items %}
+        <li>
+          <a class="d-flex" href="{{ link.url }}"{{ link.isExternal ? link_attributes: '' }}>
+            {{ link.text }}
+            {{ arrow_icon }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endset %}
+{% endif %}
+
+# Print menu list
+{{menu_markup}}`}
+</Code>
