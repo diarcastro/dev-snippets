@@ -3,6 +3,7 @@ import _isFunction from 'lodash/isFunction';
 
 import Pill from '@atoms/Pill';
 import { TagItem } from 'interfaces/snippets';
+import { Heading } from '@atoms/Heading';
 
 export interface SidebarProps {
   tags: TagItem[];
@@ -15,12 +16,12 @@ const Sidebar = ({tags, onChange}: SidebarProps) => {
     }
   };
   return (
-    <aside className="sticky top-8">
-      <h2 className="text-xl font-bold my-4">Tags</h2>
+    <aside className="sticky top-32">
+      <Heading>Tags</Heading>
       {
         tags.length > 0 && tags.map(({ name, active }: TagItem) => (
           <button type="button" key={name} className="mb-4" onClick={() => onClick(name, !active)}>
-            <Pill active={active}>{name}</Pill>
+            <Pill active={active} hover>{name}</Pill>
           </button>
         ))
       }
