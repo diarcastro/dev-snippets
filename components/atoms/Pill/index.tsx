@@ -3,10 +3,11 @@ import styles from './styles';
 
 export interface PillProps extends WithChildren {
   active?: boolean;
+  hover?: boolean;
 }
 
-const Pill = ({ active = false, children }: PillProps) => (
-  <span className={styles.component(active)}>{children}</span>
+const Pill = ({ active = false, hover = false, children }: PillProps) => (
+  <span className={styles.component(active, hover)}>{children}</span>
 );
 
 export default Pill;

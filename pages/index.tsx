@@ -1,16 +1,13 @@
 import { useCallback, useReducer } from 'react';
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { MDXRemote } from 'next-mdx-remote';
 import _forEach from 'lodash/forEach';
 import _filter from 'lodash/filter';
 import _every from 'lodash/every';
 import _map from 'lodash/map';
 
 import Header from '@molecules/Header';
-import Code from '@molecules/Code';
 import Container from '@atoms/Container';
-import Tags from '@molecules/Tags';
 
 import getSnippets from 'lib/getSnippets';
 import Sidebar from '@molecules/Sidebar';
@@ -21,6 +18,7 @@ import {
   SnippetsPageStateAction, TagItem,
   TagsLike
 } from 'interfaces/snippets';
+import Snippet from '@templates/Snippet';
 
 export interface HomeProps {
   snippets: SnippetData[];
@@ -66,7 +64,7 @@ const reducer = (state: SnippetsPageState, action: SnippetsPageStateAction) => {
       activeTags,
     } = newState;
 
-    newState.filteredSnippets =  _filter(state.snippets, ({ metadata }) => {
+    newState.filteredSnippets = _filter(state.snippets, ({ metadata }) => {
       const { tags } = metadata;
       return activeTags.length === 0 ? true : _every(activeTags, (tag) => tags.includes(tag));
     });
@@ -136,16 +134,12 @@ const Home: NextPage<HomeProps> = ({ snippets }) => {
             {
               filteredSnippets.length > 0 && filteredSnippets.map((snippet: SnippetData) => {
                 const { metadata, slug, mdxSource } = snippet;
-                const { title, tags, date } = metadata;
 
-                return (
-                  <article key={slug} className="pb-8">
-                    <h2 className="text-2xl font-bold my-4">{title}</h2>
-                    <small>{date}</small>
-                    <Tags tags={tags} />
-                    <MDXRemote {...mdxSource} components={{ Code }} />
-                  </article>
-                );
+                return <Snippet
+                  key={slug}
+                  metadata={metadata}
+                  mdxSource={mdxSource}
+                />
               })
             }
           </article>

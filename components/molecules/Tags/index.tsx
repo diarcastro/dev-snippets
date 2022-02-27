@@ -6,7 +6,7 @@ export interface TagsProps {
 }
 
 const Tags = ({tags}: TagsProps) => (
-  <div className="my-4">
+  <div className="mt-4 mb-6">
     {
       tags.length > 0 && tags.map((tag: string) => (
         <Pill key={tag}>{tag}</Pill>
