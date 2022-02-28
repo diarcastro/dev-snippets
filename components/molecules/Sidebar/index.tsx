@@ -45,7 +45,7 @@ const Sidebar = ({ tags, onChange }: SidebarProps) => {
       <button
         type="button"
         className={resetButtonClasses} onClick={() => onClick(null)}>
-        Clear fitlers
+        Clear filters
       </button>
     </aside>
   );
