@@ -9,6 +9,7 @@ const styles = {
     'shadow-md',
     'shadow-sand-600',
     'sticky',
+    'z-50',
     'top-0',
   ),
   title: classNames(

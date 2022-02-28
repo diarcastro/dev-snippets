@@ -31,7 +31,17 @@ a {
   }
 
   a {
-    @apply font-bold hover:text-blue-800;
+    @apply
+      font-bold
+      border-b
+      border-transparent
+      transition-all
+      hover:text-coldPurple-600 hover:border-pink-800
+      ;
+  }
+
+  p > code {
+    @apply font-bold bg-manhattan-300 p-1 shadow-md;
   }
 
   code {
