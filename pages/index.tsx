@@ -130,7 +130,7 @@ const Home: NextPage<HomeProps> = ({ snippets }) => {
           <article className="md:w-1/4 flex-none">
             <Sidebar tags={tagItems} onChange={onSelectedTagsChange} />
           </article>
-          <article className="md:w-3/4">
+          <article className="md:w-3/4 mt-0 md:mt-4 overflow-x-hidden">
             {
               filteredSnippets.length > 0 && filteredSnippets.map((snippet: SnippetData) => {
                 const { metadata, slug, mdxSource } = snippet;
